@@ -1,0 +1,13 @@
+dbt_clinical_data:
+  outputs:
+    dev:
+      account: SOQJYYN-TZC70084
+      database: DEV
+      password: Ctli@123octoct
+      role: ACCOUNTADMIN
+      schema: PUBLIC
+      threads: 1
+      type: snowflake
+      user: AE02
+      warehouse: COMPUTE_WH
+  target: dev
