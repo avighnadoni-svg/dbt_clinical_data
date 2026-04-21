@@ -1,4 +1,8 @@
-
+venv/
+__pycache__/
+*.pyc
+.env
+.logs/
 target/
 dbt_packages/
-logs/
+.airflowignore

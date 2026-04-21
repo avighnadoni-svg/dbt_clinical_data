@@ -1,13 +1,14 @@
 dbt_clinical_data:
+  target: dev
   outputs:
     dev:
-      account: SOQJYYN-TZC70084
-      database: DEV
-      password: Ctli@123octoct
-      role: ACCOUNTADMIN
-      schema: PUBLIC
-      threads: 1
       type: snowflake
-      user: AE02
-      warehouse: COMPUTE_WH
-  target: dev
+      account: "{{ env_var('DBT_ACCOUNT') }}"
+      user: "{{ env_var('DBT_USER') }}"
+      password: "{{ env_var('DBT_PASSWORD') }}"
+      role: "{{ env_var('DBT_ROLE') }}"
+      database: "{{ env_var('DBT_DATABASE') }}"
+      warehouse: "{{ env_var('DBT_WAREHOUSE') }}"
+      schema: "{{ env_var('DBT_SCHEMA') }}"
+      threads: 1
+ 
