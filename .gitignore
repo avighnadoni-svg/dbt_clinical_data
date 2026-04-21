@@ -1,8 +1,23 @@
+# Ignore Airflow stuff
+dags/
+plugins/
+logs/
+
+# Ignore Python
 venv/
 __pycache__/
 *.pyc
-.env
-.logs/
+
+# Ignore dbt generated files
 target/
 dbt_packages/
-include/dbt/dbt_clinical_data/logs/
+logs/
+
+# Ignore env files
+.env
+
+# Ignore Astro config
+.astro/
+
+# Ignore airflow config if not needed
+airflow_settings.yaml
