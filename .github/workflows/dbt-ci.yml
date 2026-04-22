@@ -44,8 +44,5 @@ jobs:
       - name: dbt debug
         run: dbt debug --profiles-dir ../profiles
 
-      - name: dbt parse
-        run: dbt parse --profiles-dir ../profiles
-
-      - name: dbt test
-        run: dbt test --profiles-dir ../profiles
+      - name: dbt build
+        run: dbt build --profiles-dir ../profiles
