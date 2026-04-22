@@ -1,0 +1,30 @@
+version: 2
+
+models:
+  - name: mart_patient_journey
+    columns:
+      - name: patient_key
+        tests:
+          - not_null
+          - unique
+
+  - name: mart_disease_overview
+    columns:
+      - name: disease_code_key
+        tests:
+          - not_null
+          - unique
+
+  - name: mart_provider_performance
+    columns:
+      - name: provider_key
+        tests:
+          - not_null
+          - unique
+
+  - name: mart_payer_financials
+    columns:
+      - name: payer_key
+        tests:
+          - not_null
+          - unique
