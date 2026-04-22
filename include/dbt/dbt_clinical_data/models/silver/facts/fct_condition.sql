@@ -1,14 +1,46 @@
 {{ config(materialized='table') }}
 
-select
-    PATIENT as patient_id,
-    ENCOUNTER as encounter_id,
-    CODE as condition_code,
-    DESCRIPTION as condition_description,
-    "START" as condition_start_ts,
-    "STOP" as condition_stop_ts,
-    case when "STOP" is null then 1 else 0 end as is_active,
-    LOAD_TS,
-    SOURCE_FILE,
-    BATCH_ID
-from {{ source('bronze', 'br_conditions') }}
+with src as (
+    select * from {{ source('bronze', 'br_conditions') }}
+),
+
+enc as (
+    select encounter_key, encounter_id
+    from {{ ref('fct_encounter') }}
+),
+
+final as (
+    select
+        {{ dbt_utils.generate_surrogate_key([
+            'src.PATIENT',
+            'src.ENCOUNTER',
+            'src.CODE',
+            'src."START"'
+        ]) }} as condition_fact_key,
+        p.patient_key,
+        e.encounter_key,
+        cc.clinical_code_key as condition_code_key,
+        ds.date_key as condition_start_date_key,
+        de.date_key as condition_stop_date_key,
+        src."START" as condition_start_ts,
+        src."STOP" as condition_stop_ts,
+        1 as condition_event_count,
+        case when src."STOP" is null then 1 else 0 end as is_active_flag,
+        src.LOAD_TS,
+        src.SOURCE_FILE,
+        src.BATCH_ID
+    from src
+    left join {{ ref('dim_patient') }} p
+        on src.PATIENT = p.patient_id
+    left join enc e
+        on src.ENCOUNTER = e.encounter_id
+    left join {{ ref('dim_clinical_code') }} cc
+        on src.CODE = cc.code
+       and cc.code_type = 'condition'
+    left join {{ ref('dim_date') }} ds
+        on cast(src."START" as date) = ds.full_date
+    left join {{ ref('dim_date') }} de
+        on cast(src."STOP" as date) = de.full_date
+)
+
+select * from final

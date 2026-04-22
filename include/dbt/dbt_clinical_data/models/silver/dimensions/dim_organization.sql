@@ -1,6 +1,7 @@
 {{ config(materialized='table') }}
 
 select
+    {{ dbt_utils.generate_surrogate_key(['ID']) }} as organization_key,
     ID as organization_id,
     NAME as organization_name,
     ADDRESS as address,

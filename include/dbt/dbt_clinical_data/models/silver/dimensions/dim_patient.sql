@@ -1,6 +1,7 @@
 {{ config(materialized='table') }}
 
 select
+    {{ dbt_utils.generate_surrogate_key(['ID']) }} as patient_key,
     ID as patient_id,
     BIRTHDATE as birth_date,
     DEATHDATE as death_date,

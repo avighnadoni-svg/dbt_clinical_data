@@ -3,152 +3,144 @@ version: 2
 models:
   - name: dim_patient
     columns:
+      - name: patient_key
+        tests: [not_null, unique]
       - name: patient_id
-        tests:
-          - not_null
-          - unique
+        tests: [not_null, unique]
 
   - name: dim_provider
     columns:
+      - name: provider_key
+        tests: [not_null, unique]
       - name: provider_id
-        tests:
-          - not_null
-          - unique
+        tests: [not_null, unique]
 
   - name: dim_organization
     columns:
+      - name: organization_key
+        tests: [not_null, unique]
       - name: organization_id
-        tests:
-          - not_null
-          - unique
+        tests: [not_null, unique]
 
   - name: dim_payer
     columns:
+      - name: payer_key
+        tests: [not_null, unique]
       - name: payer_id
-        tests:
-          - not_null
-          - unique
+        tests: [not_null, unique]
+
+  - name: dim_date
+    columns:
+      - name: date_key
+        tests: [not_null, unique]
+      - name: full_date
+        tests: [not_null, unique]
+
+  - name: dim_clinical_code
+    columns:
+      - name: clinical_code_key
+        tests: [not_null, unique]
 
   - name: fct_encounter
     columns:
-      - name: encounter_id
-        tests:
-          - not_null
-          - unique
-      - name: patient_id
+      - name: encounter_key
+        tests: [not_null, unique]
+      - name: patient_key
         tests:
           - not_null
           - relationships:
               to: ref('dim_patient')
-              field: patient_id
+              field: patient_key
 
   - name: fct_condition
     columns:
-      - name: patient_id
+      - name: patient_key
         tests:
-          - not_null
           - relationships:
               to: ref('dim_patient')
-              field: patient_id
+              field: patient_key
 
   - name: fct_observation
     columns:
-      - name: patient_id
+      - name: patient_key
         tests:
-          - not_null
           - relationships:
               to: ref('dim_patient')
-              field: patient_id
+              field: patient_key
 
   - name: fct_medication
     columns:
-      - name: patient_id
+      - name: patient_key
         tests:
-          - not_null
           - relationships:
               to: ref('dim_patient')
-              field: patient_id
+              field: patient_key
 
   - name: fct_procedure
     columns:
-      - name: patient_id
+      - name: patient_key
         tests:
-          - not_null
           - relationships:
               to: ref('dim_patient')
-              field: patient_id
+              field: patient_key
 
   - name: fct_careplan
     columns:
-      - name: careplan_id
+      - name: patient_key
         tests:
-          - not_null
-      - name: patient_id
-        tests:
-          - not_null
           - relationships:
               to: ref('dim_patient')
-              field: patient_id
+              field: patient_key
 
   - name: fct_device
     columns:
-      - name: patient_id
+      - name: patient_key
         tests:
-          - not_null
           - relationships:
               to: ref('dim_patient')
-              field: patient_id
+              field: patient_key
 
   - name: fct_immunization
     columns:
-      - name: patient_id
+      - name: patient_key
         tests:
-          - not_null
           - relationships:
               to: ref('dim_patient')
-              field: patient_id
+              field: patient_key
 
   - name: fct_imaging_study
     columns:
-      - name: imaging_study_id
+      - name: patient_key
         tests:
-          - not_null
-      - name: patient_id
-        tests:
-          - not_null
           - relationships:
               to: ref('dim_patient')
-              field: patient_id
+              field: patient_key
 
   - name: fct_supply
     columns:
-      - name: patient_id
+      - name: patient_key
         tests:
-          - not_null
           - relationships:
               to: ref('dim_patient')
-              field: patient_id
+              field: patient_key
 
   - name: fct_allergy
     columns:
-      - name: patient_id
+      - name: patient_key
         tests:
-          - not_null
           - relationships:
               to: ref('dim_patient')
-              field: patient_id
+              field: patient_key
 
   - name: fct_payer_transition
     columns:
-      - name: patient_id
+      - name: patient_key
         tests:
-          - not_null
           - relationships:
               to: ref('dim_patient')
-              field: patient_id
-      - name: payer_id
+              field: patient_key
+      - name: payer_key
         tests:
-          - not_null
           - relationships:
               to: ref('dim_payer')
-              field: payer_id
+              field: payer_key

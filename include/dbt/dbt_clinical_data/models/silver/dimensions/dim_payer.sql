@@ -1,6 +1,7 @@
 {{ config(materialized='table') }}
 
 select
+    {{ dbt_utils.generate_surrogate_key(['ID']) }} as payer_key,
     ID as payer_id,
     NAME as payer_name,
     ADDRESS as address,
